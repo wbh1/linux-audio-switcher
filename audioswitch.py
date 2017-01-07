@@ -1,4 +1,5 @@
 import os, sys, subprocess, re
+import config
 
 if len(sys.argv) < 1:
     print("Need output device")
@@ -10,13 +11,13 @@ kk = re.split('index: ', asd)
 
 kk.remove(kk[0])
 
-outputs = {'HDMI': '', 'head': ''}
+outputs = {'1': '', '2': ''}
 
 for item in kk:
-    if "HDMI" in item:
-        outputs['HDMI'] = item[:item.find('\\')]
-    elif "USB" in item:
-        outputs['head'] = item[:item.find('\\')]
+    if config.input1 in item:
+        outputs['1'] = item[:item.find('\\')]
+    elif config.input2 in item:
+        outputs['2'] = item[:item.find('\\')]
 
 arg1 = sys.argv[1]
 mno = "pacmd list-sink-inputs | grep 'index'"
@@ -29,16 +30,16 @@ for input in lkn:
     inputs.append(input[:input.find('\\')])
 
 if arg1.lower() == 'h':
-    cmd = "pacmd set-default-sink %s" % outputs['head']
+    cmd = "pacmd set-default-sink %s" % outputs['2']
     os.system(cmd)
     for input in inputs:
-        cmd2 = "pacmd move-sink-input %s %s" % (input, outputs['head'])
+        cmd2 = "pacmd move-sink-input %s %s" % (input, outputs['2'])
         os.system(cmd2)
 elif arg1.lower() == 's':
-    cmd = "pacmd set-default-sink %s" % outputs['HDMI']
+    cmd = "pacmd set-default-sink %s" % outputs['1']
     os.system(cmd)
     for input in inputs:
-        cmd2 = "pacmd move-sink-input %s %s" % (input, outputs['HDMI'])
+        cmd2 = "pacmd move-sink-input %s %s" % (input, outputs['1'])
         os.system(cmd2)
 
 print("Done.")
