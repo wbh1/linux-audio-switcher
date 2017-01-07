@@ -5,10 +5,6 @@ I wrote this specifically for my usage, but it can easily be customized for your
 
 Running `pacmd list-sinks` in Terminal will show all of your audio outputs. Use this to determine the names of the outputs you want to switch between.
 
-Change the name in quotes in line 16 to reflect the name of one output (I recommend the headphones).
-
-Change the name in quotes in line 18 to reflect the name of the other output (I recommend the speakers).
-
 The command line argument for selecting the first output is **h** (headphones)
 
 The command line argument for selecting the second output is **s** (speakers)
